@@ -16,7 +16,6 @@ h1 {
   color: #333;
 }
 
-/* List */
 .albaranes-list {
   margin-top: 20px;
   list-style-type: none;
@@ -80,7 +79,6 @@ button.btn-secondary:hover {
   background-color: #2980b9;
 }
 
-/* Error Message */
 .error-text {
   color: #e74c3c;
   font-size: 0.9rem;
@@ -90,11 +88,11 @@ button.btn-secondary:hover {
 .albaranes-layout {
   display: flex;
   transition: margin-left 0.3s ease;
-  margin-left: 50px; /* Ancho del sidebar cerrado */
+  margin-left: 50px;
 }
 
 .albaranes-layout.sidebar-open {
-  margin-left: 250px; /* Ancho del sidebar abierto */
+  margin-left: 250px;
 }
 
 .albaranes-content {
