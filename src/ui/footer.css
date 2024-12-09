@@ -1,0 +1,13 @@
+/* Footer Styling */
+.footer {
+  background-color: #222;
+  color: #f8f8f8;
+  text-align: center;
+  padding: 20px 15px;
+  font-size: 0.9rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
