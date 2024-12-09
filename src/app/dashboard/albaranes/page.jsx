@@ -8,27 +8,23 @@ export default function AlbaranesPage() {
   const [deliveryNotes, setDeliveryNotes] = useState([]);
   const [clients, setClients] = useState([]);
   const [error, setError] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Estado del sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Sincroniza el estado del sidebar con la clase del contenedor
   const handleSidebarToggle = (isOpen) => {
     setIsSidebarOpen(isOpen);
   };
 
-  // Fetch delivery notes and clients
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("jwt");
 
-        // Fetch albaranes
         const deliveryNoteResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/deliverynote", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!deliveryNoteResponse.ok) throw new Error("Error al cargar los albaranes");
         const deliveryNotesData = await deliveryNoteResponse.json();
 
-        // Fetch clients
         const clientResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/client", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -45,7 +41,6 @@ export default function AlbaranesPage() {
     fetchData();
   }, []);
 
-  // Find client name by ID
   const getClientName = (clientId) => {
     const client = clients.find((c) => c._id === clientId);
     return client ? client.name : "Sin cliente";
