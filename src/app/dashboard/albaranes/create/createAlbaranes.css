@@ -1,0 +1,102 @@
+.create-deliverynote-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fafc;
+}
+
+.create-deliverynote-content {
+  margin: auto;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #34495e;
+  margin-bottom: 20px;
+}
+
+.deliverynote-form {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deliverynote-form label {
+  display: block;
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.deliverynote-form input,
+.deliverynote-form select,
+.deliverynote-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f7f9fc;
+  color: #495057;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.deliverynote-form input:focus,
+.deliverynote-form select:focus,
+.deliverynote-form textarea:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+  outline: none;
+}
+
+.deliverynote-form textarea {
+  resize: none;
+  height: 80px;
+}
+
+.btn-success {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: #1abc9c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background: #16a085;
+}
+
+.error-text {
+  font-size: 0.9rem;
+  color: #e74c3c;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .create-deliverynote-content {
+    padding: 15px;
+  }
+
+  .deliverynote-form {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
