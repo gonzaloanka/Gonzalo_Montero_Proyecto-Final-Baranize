@@ -6,25 +6,29 @@ import Sidebar from "@/ui/sidebar";
 import "./projects.css";
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState([]);
-  const [clients, setClients] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
+  // Estados para manejar proyectos, clientes, errores y estados de carga
+  const [projects, setProjects] = useState([]); // Lista de proyectos
+  const [clients, setClients] = useState([]); // Lista de clientes
+  const [selectedProject, setSelectedProject] = useState(null); // Proyecto seleccionado para editar
+  const [error, setError] = useState(null); // Manejo de errores
+  const [loading, setLoading] = useState(true); // Indica si los datos están cargando
+  const [showForm, setShowForm] = useState(false); // Muestra u oculta el formulario de creación/edición
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(); // Manejo de formularios
 
+  // Efecto para cargar proyectos y clientes al montar el componente
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("jwt");
 
+        // Carga los proyectos
         const projectResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/project", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!projectResponse.ok) throw new Error("Error al cargar proyectos");
         const projectData = await projectResponse.json();
 
+        // Recupera datos locales (estado y fecha) para los proyectos
         const storedData = JSON.parse(localStorage.getItem("projectData")) || {};
         const updatedProjects = projectData.map((project) => ({
           ...project,
@@ -33,6 +37,7 @@ export default function ProjectsPage() {
         }));
         setProjects(updatedProjects);
 
+        // Carga los clientes
         const clientResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/client", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -40,27 +45,30 @@ export default function ProjectsPage() {
         const clientData = await clientResponse.json();
         setClients(clientData);
       } catch (err) {
-        setError("Error al cargar datos.");
+        setError("Error al cargar datos."); // Manejo de errores global
       } finally {
-        setLoading(false);
+        setLoading(false); // Indica que la carga de datos ha finalizado
       }
     };
 
-    fetchData();
+    fetchData(); // Llama a la función de carga
   }, []);
 
+  // Guarda datos adicionales de proyectos en localStorage
   const saveToLocalStorage = (projectId, status, date) => {
     const storedData = JSON.parse(localStorage.getItem("projectData")) || {};
     storedData[projectId] = { status, date };
     localStorage.setItem("projectData", JSON.stringify(storedData));
   };
 
+  // Maneja la creación o edición de un proyecto
   const onSubmit = async (data) => {
     try {
       const token = localStorage.getItem("jwt");
       let response;
 
       if (selectedProject) {
+        // Actualiza un proyecto existente
         response = await fetch(`https://bildy-rpmaya.koyeb.app/api/project/${selectedProject._id}`, {
           method: "PUT",
           headers: {
@@ -72,12 +80,14 @@ export default function ProjectsPage() {
         if (!response.ok) throw new Error("Error al actualizar proyecto");
         const updatedProject = await response.json();
 
+        // Actualiza la lista de proyectos
         setProjects((prev) =>
           prev.map((project) =>
             project._id === updatedProject._id ? { ...project, ...updatedProject } : project
           )
         );
       } else {
+        // Crea un nuevo proyecto
         response = await fetch("https://bildy-rpmaya.koyeb.app/api/project", {
           method: "POST",
           headers: {
@@ -90,19 +100,21 @@ export default function ProjectsPage() {
         const newProject = await response.json();
         const currentDate = new Date().toLocaleDateString();
 
+        // Guarda el nuevo proyecto en la lista y en localStorage
         saveToLocalStorage(newProject._id, "Pendiente", currentDate);
         setProjects([...projects, { ...newProject, status: "Pendiente", date: currentDate }]);
       }
 
-      reset();
-      setShowForm(false);
-      setSelectedProject(null);
-      alert("Proyecto guardado exitosamente.");
+      reset(); // Limpia el formulario
+      setShowForm(false); // Oculta el formulario
+      setSelectedProject(null); // Reinicia el proyecto seleccionado
+      alert("Proyecto guardado exitosamente."); // Notifica al usuario
     } catch (err) {
       setError("No se pudo guardar el proyecto.");
     }
   };
 
+  // Actualiza el estado de un proyecto
   const handleUpdateStatus = (projectId, newStatus) => {
     const updatedProjects = projects.map((project) =>
       project._id === projectId ? { ...project, status: newStatus } : project
@@ -111,6 +123,7 @@ export default function ProjectsPage() {
     saveToLocalStorage(projectId, newStatus, new Date().toLocaleDateString());
   };
 
+  // Maneja la eliminación de un proyecto
   const handleDelete = async (projectId) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este proyecto?")) return;
 
@@ -122,7 +135,10 @@ export default function ProjectsPage() {
       });
       if (!response.ok) throw new Error("Error al eliminar proyecto");
 
+      // Actualiza la lista de proyectos eliminando el correspondiente
       setProjects(projects.filter((p) => p._id !== projectId));
+
+      // Elimina los datos del proyecto de localStorage
       const storedData = JSON.parse(localStorage.getItem("projectData")) || {};
       delete storedData[projectId];
       localStorage.setItem("projectData", JSON.stringify(storedData));
@@ -133,26 +149,29 @@ export default function ProjectsPage() {
     }
   };
 
+  // Prepara el formulario para editar un proyecto
   const handleEdit = (project) => {
-    setSelectedProject(project);
-    setValue("name", project.name);
+    setSelectedProject(project); // Selecciona el proyecto
+    setValue("name", project.name); // Llena el formulario con los datos del proyecto
     setValue("clientId", project.clientId);
-    setShowForm(true);
+    setShowForm(true); // Muestra el formulario
   };
 
+  // Muestra un mensaje de carga mientras se obtienen los datos
   if (loading) return <div className="loading">Cargando datos...</div>;
 
   return (
     <div className="projects-layout">
-      <Sidebar />
+      <Sidebar /> {/* Barra lateral */}
       <div className="projects-content">
         <h1>Gestión de Proyectos</h1>
-        {error && <p className="error-text">{error}</p>}
+        {error && <p className="error-text">{error}</p>} {/* Muestra errores si existen */}
 
         <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
           {showForm ? "Ocultar Formulario" : "Crear Proyecto"}
         </button>
 
+        {/* Formulario de creación/edición de proyectos */}
         {showForm && (
           <form onSubmit={handleSubmit(onSubmit)} className="project-form">
             <h2>{selectedProject ? "Editar Proyecto" : "Crear Proyecto"}</h2>
@@ -175,6 +194,7 @@ export default function ProjectsPage() {
           </form>
         )}
 
+        {/* Lista de proyectos */}
         <div className="projects-list">
           {projects.length > 0 ? (
             <ul>
@@ -199,13 +219,14 @@ export default function ProjectsPage() {
               ))}
             </ul>
           ) : (
-            <p>No hay proyectos registrados aún.</p>
+            <p>No hay proyectos registrados aún.</p> /* Mensaje si no hay proyectos */
           )}
         </div>
       </div>
     </div>
   );
 }
+
 
 
 
