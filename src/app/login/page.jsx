@@ -20,7 +20,7 @@ export default function Login() {
       if (!response.ok) throw new Error("Credenciales incorrectas");
 
       const result = await response.json();
-      localStorage.setItem("jwt", result.token); // Guardar token
+      localStorage.setItem("jwt", result.token);
       alert("Inicio de sesión exitoso. Redirigiendo al dashboard...");
       router.push("/dashboard");
     } catch (err) {
