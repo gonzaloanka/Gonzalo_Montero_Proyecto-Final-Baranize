@@ -8,7 +8,7 @@ import "./projects.css";
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [clients, setClients] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null); // Proyecto seleccionado para editar
+  const [selectedProject, setSelectedProject] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -61,7 +61,6 @@ export default function ProjectsPage() {
       let response;
 
       if (selectedProject) {
-        // Actualizar proyecto existente
         response = await fetch(`https://bildy-rpmaya.koyeb.app/api/project/${selectedProject._id}`, {
           method: "PUT",
           headers: {
@@ -79,7 +78,6 @@ export default function ProjectsPage() {
           )
         );
       } else {
-        // Crear nuevo proyecto
         response = await fetch("https://bildy-rpmaya.koyeb.app/api/project", {
           method: "POST",
           headers: {
