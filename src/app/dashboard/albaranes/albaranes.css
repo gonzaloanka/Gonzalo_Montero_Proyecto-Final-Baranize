@@ -1,0 +1,104 @@
+.albaranes-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.albaranes-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f4f7fc;
+  overflow-y: auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* List */
+.albaranes-list {
+  margin-top: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.albaran-item {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.albaran-item:hover {
+  transform: translateY(-5px);
+}
+
+.albaran-item p {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.albaran-item strong {
+  color: #333;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-danger {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+}
+
+button.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+button.btn-secondary {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+}
+
+button.btn-secondary:hover {
+  background-color: #2980b9;
+}
+
+/* Error Message */
+.error-text {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.albaranes-layout {
+  display: flex;
+  transition: margin-left 0.3s ease;
+  margin-left: 50px; /* Ancho del sidebar cerrado */
+}
+
+.albaranes-layout.sidebar-open {
+  margin-left: 250px; /* Ancho del sidebar abierto */
+}
+
+.albaranes-content {
+  flex-grow: 1;
+  padding: 20px;
+  transition: padding-left 0.3s ease;
+}
