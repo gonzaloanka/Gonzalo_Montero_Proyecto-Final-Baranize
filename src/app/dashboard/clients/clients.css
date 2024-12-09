@@ -1,0 +1,163 @@
+.clients-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fdfdfd;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.client-details, .clients-list, .no-clients {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.client-details h2, .clients-list h2 {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+.client-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: linear-gradient(to right, #ffffff, #f8f9fa);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.client-item:hover {
+  background: #eef7ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.client-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.client-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.client-info h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.client-info p {
+  margin: 5px 0 0;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+}
+
+.client-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.client-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fefefe;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  transition: background 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: #a71d2a;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.client-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.no-clients p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+.clients-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.clients-content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.closed + .clients-content {
+  margin-left: 60px;
+}
+
+
+  
+  
+  
+  
+  
