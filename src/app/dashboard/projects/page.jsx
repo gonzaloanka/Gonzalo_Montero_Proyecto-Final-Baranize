@@ -6,14 +6,13 @@ import Sidebar from "@/ui/sidebar";
 import "./projects.css";
 
 export default function ProjectsPage() {
-  // Estados para manejar proyectos, clientes, errores y estados de carga
-  const [projects, setProjects] = useState([]); // Lista de proyectos
-  const [clients, setClients] = useState([]); // Lista de clientes
-  const [selectedProject, setSelectedProject] = useState(null); // Proyecto seleccionado para editar
-  const [error, setError] = useState(null); // Manejo de errores
-  const [loading, setLoading] = useState(true); // Indica si los datos están cargando
-  const [showForm, setShowForm] = useState(false); // Muestra u oculta el formulario de creación/edición
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(); // Manejo de formularios
+  const [projects, setProjects] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
 
   // Efecto para cargar proyectos y clientes al montar el componente
   useEffect(() => {
@@ -45,13 +44,13 @@ export default function ProjectsPage() {
         const clientData = await clientResponse.json();
         setClients(clientData);
       } catch (err) {
-        setError("Error al cargar datos."); // Manejo de errores global
+        setError("Error al cargar datos.");
       } finally {
-        setLoading(false); // Indica que la carga de datos ha finalizado
+        setLoading(false);
       }
     };
 
-    fetchData(); // Llama a la función de carga
+    fetchData();
   }, []);
 
   // Guarda datos adicionales de proyectos en localStorage
@@ -105,10 +104,10 @@ export default function ProjectsPage() {
         setProjects([...projects, { ...newProject, status: "Pendiente", date: currentDate }]);
       }
 
-      reset(); // Limpia el formulario
-      setShowForm(false); // Oculta el formulario
-      setSelectedProject(null); // Reinicia el proyecto seleccionado
-      alert("Proyecto guardado exitosamente."); // Notifica al usuario
+      reset();
+      setShowForm(false);
+      setSelectedProject(null);
+      alert("Proyecto guardado exitosamente.");
     } catch (err) {
       setError("No se pudo guardar el proyecto.");
     }
@@ -151,10 +150,10 @@ export default function ProjectsPage() {
 
   // Prepara el formulario para editar un proyecto
   const handleEdit = (project) => {
-    setSelectedProject(project); // Selecciona el proyecto
-    setValue("name", project.name); // Llena el formulario con los datos del proyecto
+    setSelectedProject(project);
+    setValue("name", project.name);
     setValue("clientId", project.clientId);
-    setShowForm(true); // Muestra el formulario
+    setShowForm(true);
   };
 
   // Muestra un mensaje de carga mientras se obtienen los datos
@@ -162,10 +161,10 @@ export default function ProjectsPage() {
 
   return (
     <div className="projects-layout">
-      <Sidebar /> {/* Barra lateral */}
+      <Sidebar />
       <div className="projects-content">
         <h1>Gestión de Proyectos</h1>
-        {error && <p className="error-text">{error}</p>} {/* Muestra errores si existen */}
+        {error && <p className="error-text">{error}</p>}
 
         <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
           {showForm ? "Ocultar Formulario" : "Crear Proyecto"}
@@ -219,7 +218,7 @@ export default function ProjectsPage() {
               ))}
             </ul>
           ) : (
-            <p>No hay proyectos registrados aún.</p> /* Mensaje si no hay proyectos */
+            <p>No hay proyectos registrados aún.</p>
           )}
         </div>
       </div>
