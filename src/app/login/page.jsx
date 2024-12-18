@@ -1,9 +1,9 @@
-"use client"; // Indica que este componente se ejecuta en el cliente.
+"use client";
 
-import { useForm } from "react-hook-form"; // Librería para manejar formularios con validación.
-import { useState } from "react"; // Hook para manejar estados locales.
-import { useRouter } from "next/navigation"; // Hook de navegación de Next.js.
-import "./login.css"; // Archivo CSS para los estilos específicos de la página de login.
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import "./login.css";
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm(); // Configuración del formulario.
