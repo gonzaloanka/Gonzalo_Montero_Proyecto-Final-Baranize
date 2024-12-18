@@ -5,22 +5,19 @@ import Sidebar from "@/ui/sidebar";
 import "./albaranes.css";
 
 export default function AlbaranesPage() {
-  // Estado para almacenar los albaranes y clientes.
   const [deliveryNotes, setDeliveryNotes] = useState([]);
   const [clients, setClients] = useState([]);
-  const [error, setError] = useState(null); // Manejo de errores.
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Estado para controlar el sidebar.
+  const [error, setError] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Actualiza el estado del sidebar cuando se abre o cierra.
   const handleSidebarToggle = (isOpen) => {
     setIsSidebarOpen(isOpen);
   };
 
-  // Fetch inicial de albaranes y clientes al montar el componente.
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("jwt"); // Obtiene el token del almacenamiento local.
+        const token = localStorage.getItem("jwt");
 
         // Fetch para obtener albaranes.
         const deliveryNoteResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/deliverynote", {
@@ -36,10 +33,10 @@ export default function AlbaranesPage() {
         if (!clientResponse.ok) throw new Error("Error al cargar clientes");
         const clientsData = await clientResponse.json();
 
-        setDeliveryNotes(deliveryNotesData); // Actualiza los albaranes.
-        setClients(clientsData); // Actualiza los clientes.
+        setDeliveryNotes(deliveryNotesData);
+        setClients(clientsData);
       } catch (err) {
-        setError("Error al cargar los albaranes o clientes."); // Manejo de errores.
+        setError("Error al cargar los albaranes o clientes.");
       }
     };
 
@@ -63,10 +60,10 @@ export default function AlbaranesPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Error al eliminar el albarán");
-      setDeliveryNotes(deliveryNotes.filter((note) => note._id !== id)); // Actualiza el estado.
+      setDeliveryNotes(deliveryNotes.filter((note) => note._id !== id));
       alert("Albarán eliminado correctamente.");
     } catch (err) {
-      setError("No se pudo eliminar el albarán."); // Manejo de errores.
+      setError("No se pudo eliminar el albarán.");
     }
   };
 
@@ -87,18 +84,18 @@ export default function AlbaranesPage() {
       const link = document.createElement("a"); // Crea un enlace para la descarga.
       link.href = url;
       link.download = `Albaran_${id}.pdf`;
-      link.click(); // Simula un clic para descargar.
+      link.click();
     } catch (err) {
-      setError("No se pudo descargar el albarán."); // Manejo de errores.
+      setError("No se pudo descargar el albarán.");
     }
   };
 
   return (
-    <div className={`albaranes-layout ${isSidebarOpen ? "sidebar-open" : ""}`}> {/* Layout principal. */}
-      <Sidebar onToggle={handleSidebarToggle} /> {/* Barra lateral con control de apertura/cierre. */}
-      <div className="albaranes-content"> {/* Contenido principal de la página. */}
-        <h1>Gestión de Albaranes</h1> {/* Título principal. */}
-        {error && <p className="error-text">{error}</p>} {/* Mensaje de error, si existe. */}
+    <div className={`albaranes-layout ${isSidebarOpen ? "sidebar-open" : ""}`}>
+      <Sidebar onToggle={handleSidebarToggle} />
+      <div className="albaranes-content">
+        <h1>Gestión de Albaranes</h1>
+        {error && <p className="error-text">{error}</p>}
 
         {/* Botón para redirigir a la creación de un nuevo albarán. */}
         <button
@@ -113,11 +110,11 @@ export default function AlbaranesPage() {
           {deliveryNotes.length > 0 ? (
             <ul>
               {deliveryNotes.map((note) => (
-                <li key={note._id} className="albaran-item"> {/* Elemento individual de albarán. */}
+                <li key={note._id} className="albaran-item">
                   <p><strong>Descripción:</strong> {note.description || "Sin descripción"}</p>
                   <p><strong>Proyecto:</strong> {note.projectId?.name || "Sin proyecto"}</p>
                   <p><strong>Cliente:</strong> {getClientName(note.clientId)}</p>
-                  <div className="buttons"> {/* Botones de acciones. */}
+                  <div className="buttons">
                     <button
                       onClick={() => handleDelete(note._id)}
                       className="btn btn-danger"
@@ -135,7 +132,7 @@ export default function AlbaranesPage() {
               ))}
             </ul>
           ) : (
-            <p>No hay albaranes disponibles.</p> /* Mensaje si no hay albaranes. */
+            <p>No hay albaranes disponibles.</p>
           )}
         </div>
       </div>
