@@ -36,20 +36,20 @@ export default function VerificationPage() {
   };
 
   return (
-    <div className="verification-container"> {/* Contenedor principal */}
-      <div className="verification-card"> {/* Tarjeta de verificación */}
+    <div className="verification-container">
+      <div className="verification-card">
         <h1 className="verification-title">Verificación de Correo</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="verification-form">
           <div className="form-group">
-            <label>Código:</label> {/* Etiqueta para el campo del código */}
+            <label>Código:</label>
             <input
               type="text"
-              {...register("code", { required: "Código es obligatorio" })} // Registro del campo con validación
-              className={errors.code ? "input-error" : ""} // Añade una clase en caso de error
+              {...register("code", { required: "Código es obligatorio" })}
+              className={errors.code ? "input-error" : ""}
             />
-            {errors.code && <p className="error-message">{errors.code.message}</p>} {/* Mensaje de error */}
+            {errors.code && <p className="error-message">{errors.code.message}</p>}
           </div>
-          <button type="submit" className="btn-primary">Validar</button> {/* Botón de envío */}
+          <button type="submit" className="btn-primary">Validar</button>
         </form>
       </div>
     </div>
