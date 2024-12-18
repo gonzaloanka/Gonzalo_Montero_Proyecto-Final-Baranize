@@ -6,25 +6,21 @@ import { useRouter } from "next/navigation";
 import Sidebar from "@/ui/sidebar";
 import "./createAlbaranes.css";
 
-// Componente principal para la creación de albaranes.
 export default function CreateDeliveryNotePage() {
-  // Configuración de react-hook-form para manejar el formulario.
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   
-  // Estados para almacenar datos de proyectos, clientes y otros.
-  const [projects, setProjects] = useState([]); // Lista de proyectos disponibles.
-  const [clients, setClients] = useState([]); // Lista de clientes disponibles.
-  const [selectedProject, setSelectedProject] = useState(null); // Proyecto seleccionado por el usuario.
-  const [error, setError] = useState(null); // Mensaje de error en caso de fallo.
+  const [projects, setProjects] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [error, setError] = useState(null);
   
-  const format = watch("format"); // Observa cambios en el campo "format" del formulario.
-  const router = useRouter(); // Instancia del enrutador para redirigir al usuario.
+  const format = watch("format");
+  const router = useRouter();
 
-  // Efecto para cargar proyectos y clientes al montar el componente.
   useEffect(() => {
     const fetchProjectsAndClients = async () => {
       try {
-        const token = localStorage.getItem("jwt"); // Obtiene el token de autenticación del almacenamiento local.
+        const token = localStorage.getItem("jwt");
 
         // Petición para obtener proyectos.
         const projectResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/project", {
@@ -42,30 +38,29 @@ export default function CreateDeliveryNotePage() {
         const clientsData = await clientResponse.json();
         setClients(clientsData);
       } catch (err) {
-        setError("Error al cargar proyectos o clientes."); // Manejo de errores durante las peticiones.
+        setError("Error al cargar proyectos o clientes.");
       }
     };
 
     fetchProjectsAndClients();
-  }, []); // Ejecuta este efecto solo una vez.
+  }, []);
 
   // Maneja el cambio de selección de proyecto.
   const handleProjectChange = (projectId) => {
-    const project = projects.find((p) => p._id === projectId); // Busca el proyecto seleccionado.
+    const project = projects.find((p) => p._id === projectId);
     if (project) {
-      const client = clients.find((c) => c._id === project.clientId); // Busca el cliente asociado al proyecto.
-      setSelectedProject({ ...project, client }); // Guarda el proyecto y su cliente.
+      const client = clients.find((c) => c._id === project.clientId);
+      setSelectedProject({ ...project, client });
     } else {
-      setSelectedProject(null); // Reinicia la selección si no hay coincidencia.
+      setSelectedProject(null);
     }
   };
 
   // Maneja el envío del formulario.
   const onSubmit = async (data) => {
     try {
-      const token = localStorage.getItem("jwt"); // Obtiene el token de autenticación.
+      const token = localStorage.getItem("jwt");
 
-      // Construye el cuerpo de la petición según el formato seleccionado.
       const body = {
         clientId: selectedProject?.client?._id,
         projectId: data.projectId,
@@ -75,9 +70,9 @@ export default function CreateDeliveryNotePage() {
       };
 
       if (data.format === "hours") {
-        body.hours = data.hours; // Agrega horas si el formato es "hours".
+        body.hours = data.hours;
       } else if (data.format === "material") {
-        body.material = data.material; // Agrega material si el formato es "material".
+        body.material = data.material;
       }
 
       // Envía la petición para crear el albarán.
@@ -96,24 +91,23 @@ export default function CreateDeliveryNotePage() {
 
       // Operaciones posteriores al éxito.
       alert("Albarán creado exitosamente.");
-      reset(); // Reinicia el formulario.
-      setSelectedProject(null); // Limpia la selección del proyecto.
-      router.push("/dashboard/albaranes"); // Redirige al usuario.
+      reset();
+      setSelectedProject(null);
+      router.push("/dashboard/albaranes");
     } catch (err) {
-      setError("Error desconocido al crear el albarán."); // Manejo de errores.
+      setError("Error desconocido al crear el albarán.");
       console.error("Error al crear el albarán:", err.message);
     }
   };
 
   return (
     <div className="create-deliverynote-layout">
-      <Sidebar /> {/* Componente de barra lateral. */}
+      <Sidebar />
       <div className="create-deliverynote-content">
         <h1>Crear Albarán</h1>
-        {error && <p className="error-text">{error}</p>} {/* Muestra errores si ocurren. */}
+        {error && <p className="error-text">{error}</p>}
         
         <form onSubmit={handleSubmit(onSubmit)} className="deliverynote-form">
-          {/* Campo para seleccionar el proyecto. */}
           <label>Proyecto:</label>
           <select
             {...register("projectId", { required: "Selecciona un proyecto" })}
@@ -128,7 +122,6 @@ export default function CreateDeliveryNotePage() {
           </select>
           {errors.projectId && <p className="error-text">{errors.projectId.message}</p>}
 
-          {/* Campo para mostrar el cliente del proyecto. */}
           <label>Cliente:</label>
           <input
             type="text"
@@ -137,7 +130,6 @@ export default function CreateDeliveryNotePage() {
           />
           <input type="hidden" {...register("clientId")} value={selectedProject?.client?._id || ""} />
 
-          {/* Campo para seleccionar el formato. */}
           <label>Formato:</label>
           <select {...register("format", { required: "Selecciona un formato" })}>
             <option value="">Seleccionar Formato</option>
@@ -146,7 +138,6 @@ export default function CreateDeliveryNotePage() {
           </select>
           {errors.format && <p className="error-text">{errors.format.message}</p>}
 
-          {/* Campos adicionales según el formato seleccionado. */}
           {format === "material" && (
             <>
               <label>Material:</label>
@@ -169,7 +160,6 @@ export default function CreateDeliveryNotePage() {
             </>
           )}
 
-          {/* Otros campos obligatorios. */}
           <label>Fecha de Trabajo:</label>
           <input
             type="date"
@@ -183,7 +173,6 @@ export default function CreateDeliveryNotePage() {
           />
           {errors.description && <p className="error-text">{errors.description.message}</p>}
 
-          {/* Botón para enviar el formulario. */}
           <button type="submit" className="btn btn-success">Crear Albarán</button>
         </form>
       </div>
