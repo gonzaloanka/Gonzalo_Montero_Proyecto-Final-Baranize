@@ -9,8 +9,10 @@ export const metadata = {
 };
 
 export default function Layout({ children }) {
+  // Determina si la página actual es parte del dashboard.
   const isDashboard =
-    typeof window !== "undefined" && window.location.pathname.startsWith("/dashboard");
+    typeof window !== "undefined" && // Comprueba si el código se ejecuta en el cliente (no en el servidor).
+    window.location.pathname.startsWith("/dashboard"); // Verifica si la ruta comienza con "/dashboard".
 
   return (
     <html lang="es">
@@ -20,12 +22,13 @@ export default function Layout({ children }) {
       <body className="layout-body">
         <Header />
         <div className={`layout-container ${isDashboard ? "dashboard-layout" : ""}`}>
+          {/* Si es parte del dashboard, incluye el Sidebar. */}
           {isDashboard && <Sidebar />}
           <main className={`layout-main ${isDashboard ? "dashboard-main" : ""}`}>
             {children}
           </main>
         </div>
-        <Footer />
+        <Footer /> {/* Incluye el pie de página en todas las páginas. */}
       </body>
     </html>
   );
