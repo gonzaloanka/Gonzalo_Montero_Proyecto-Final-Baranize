@@ -33,29 +33,29 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="register-container"> {/* Contenedor principal de la página */}
-      <div className="register-card"> {/* Tarjeta que contiene el formulario */}
-        <h1 className="register-title">Registro de Usuario</h1> {/* Título de la página */}
-        <form onSubmit={handleSubmit(onSubmit)} className="register-form"> {/* Formulario de registro */}
+    <div className="register-container">
+      <div className="register-card">
+        <h1 className="register-title">Registro de Usuario</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="register-form">
           <div className="form-group">
-            <label>Email:</label> {/* Etiqueta para el campo de correo */}
+            <label>Email:</label>
             <input
-              type="email" // Campo de entrada para el correo
-              {...register("email", { required: "Correo es obligatorio" })} // Validación del campo
-              className={errors.email ? "input-error" : ""} // Clase condicional para mostrar error
+              type="email"
+              {...register("email", { required: "Correo es obligatorio" })}
+              className={errors.email ? "input-error" : ""}
             />
-            {errors.email && <p className="error-message">{errors.email.message}</p>} {/* Mensaje de error */}
+            {errors.email && <p className="error-message">{errors.email.message}</p>}
           </div>
           <div className="form-group">
-            <label>Contraseña:</label> {/* Etiqueta para el campo de contraseña */}
+            <label>Contraseña:</label>
             <input
-              type="password" // Campo de entrada para la contraseña
-              {...register("password", { required: "Contraseña es obligatoria" })} // Validación del campo
-              className={errors.password ? "input-error" : ""} // Clase condicional para mostrar error
+              type="password"
+              {...register("password", { required: "Contraseña es obligatoria" })}
+              className={errors.password ? "input-error" : ""}
             />
-            {errors.password && <p className="error-message">{errors.password.message}</p>} {/* Mensaje de error */}
+            {errors.password && <p className="error-message">{errors.password.message}</p>}
           </div>
-          <button type="submit" className="btn btn-primary">Registrar</button> {/* Botón de envío */}
+          <button type="submit" className="btn btn-primary">Registrar</button>
         </form>
       </div>
     </div>
