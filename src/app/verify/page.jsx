@@ -1,8 +1,8 @@
-"use client"; // Indica que este componente se ejecuta en el cliente
+"use client";
 
-import { useRouter } from "next/navigation"; // Hook para la navegación en Next.js
-import { useForm } from "react-hook-form"; // Librería para manejar formularios
-import "./verify.css"; // Estilos específicos para esta página
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import "./verify.css";
 
 export default function VerificationPage() {
   const router = useRouter(); // Hook de navegación para redirigir al usuario
