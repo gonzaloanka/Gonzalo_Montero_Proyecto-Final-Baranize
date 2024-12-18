@@ -6,30 +6,28 @@ import { useForm } from "react-hook-form";
 import "./clients.css";
 
 export default function ClientsPage() {
-  // Estados para manejar clientes, cliente seleccionado, errores, formularios y archivos de logo
-  const [clients, setClients] = useState([]); // Lista de clientes
-  const [selectedClient, setSelectedClient] = useState(null); // Cliente seleccionado para ver detalles
-  const [showForm, setShowForm] = useState(false); // Mostrar formulario de creación
-  const [error, setError] = useState(null); // Errores
-  const [logoFile, setLogoFile] = useState(null); // Archivo de logo seleccionado
-  const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Manejo de formularios
+  const [clients, setClients] = useState([]);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  // Efecto para cargar la lista de clientes al renderizar el componente
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const token = localStorage.getItem("jwt"); // Obtiene el token JWT del almacenamiento local
+        const token = localStorage.getItem("jwt");
         const response = await fetch("https://bildy-rpmaya.koyeb.app/api/client", {
-          headers: { Authorization: `Bearer ${token}` }, // Autenticación con el token
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.ok) throw new Error("Error al cargar clientes");
         const data = await response.json();
-        setClients(data); // Actualiza la lista de clientes
+        setClients(data);
       } catch (err) {
-        setError("No se pudo cargar la lista de clientes."); // Manejo de errores
+        setError("No se pudo cargar la lista de clientes.");
       }
     };
-    fetchClients(); // Llama a la función de carga
+    fetchClients();
   }, []);
 
   // Maneja la creación de un nuevo cliente
@@ -42,14 +40,14 @@ export default function ClientsPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data), // Convierte los datos del formulario a JSON
+        body: JSON.stringify(data),
       });
       if (!response.ok) throw new Error("Error al crear cliente");
       const newClient = await response.json();
       setClients([...clients, newClient]); // Agrega el nuevo cliente a la lista
-      reset(); // Limpia el formulario
-      setShowForm(false); // Oculta el formulario
-      alert("Cliente creado exitosamente."); // Notifica al usuario
+      reset();
+      setShowForm(false);
+      alert("Cliente creado exitosamente.");
     } catch (err) {
       setError("No se pudo crear el cliente.");
     }
@@ -94,8 +92,8 @@ export default function ClientsPage() {
       });
       if (!response.ok) throw new Error("Error al cargar cliente");
       const data = await response.json();
-      setSelectedClient(data); // Actualiza el cliente seleccionado
-      setLogoFile(null); // Limpia el archivo de logo
+      setSelectedClient(data);
+      setLogoFile(null);
     } catch (err) {
       setError("No se pudo cargar los detalles del cliente.");
     }
@@ -122,10 +120,10 @@ export default function ClientsPage() {
 
   return (
     <div className="clients-layout">
-      <Sidebar /> {/* Barra lateral */}
+      <Sidebar />
       <div className="clients-content">
         <h1 className="title">Gestión de Clientes</h1>
-        {error && <p className="error-text">{error}</p>} {/* Muestra errores si existen */}
+        {error && <p className="error-text">{error}</p>}
 
         {/* Detalles del cliente seleccionado */}
         {selectedClient && (
